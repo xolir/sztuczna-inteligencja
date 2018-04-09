@@ -10,13 +10,43 @@ export default [
       FieldType: "path"
     },
     {
-        FieldType: "path"
+      FieldType: "path"
     },
-                {
-                  FieldType: "path"
-                },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "house"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "path"
+    }
   ],
   [
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "house"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "house"
+    },
+    {
+      FieldType: "house"
+    },
     {
       FieldType: "path"
     },
@@ -48,6 +78,21 @@ export default [
     },
     {
       FieldType: "house"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "house"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "house"
+    },
+    {
+      FieldType: "house"
     }
   ],
   [
@@ -65,9 +110,39 @@ export default [
     },
     {
       FieldType: "path"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "house"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "path"
     }
   ],
   [
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "path"
+    },
+    {
+      FieldType: "house"
+    },
+    {
+      FieldType: "house"
+    },
     {
       FieldType: "path"
     },
