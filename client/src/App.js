@@ -7,9 +7,12 @@ const roadURL =
   "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAUVBMVEX///8AAADMzMzk5OTx8fHt7e27u7v5+fkZGRnR0dEoKCiioqIpKSnBwcGrq6uysrKampo0NDRTU1ONjY0ICAiHh4d+fn4hISFCQkKAgICYmJg26SuaAAABcUlEQVR4nO3czW6CQBSAUcS2Wn5qFS3S93/QbiQDi4ZMQky8nG85uZnM2d7FFEVm77tZ5eN4v1vsc3JLuTh9PDxGP+bnb7kPzo6QkPCVhUOd+gkpzIuQkJCQkJCQkJCQkJCQkJCQkJBwu8K6Tf2GFMbfeRMSEhISEhISEhISEhISEhISEhKuI8yLkJCQkJCQkJCQkJCQkJCQkJCQcLvC+yV1DymMvxEmJCQkJCQkJCQkJCQkJCQkJCQkXEc4fKf87klISEhISEhISEhISEhISEhISEi4ZWF3SnUhhfF33oSEhISEhISEhISEhISEhISEhM8RlsVhrGhDCvsm1YcU5kVISEhISEhISEhISEhISEhISEj4X8051YQUxt95ExISEhISEhISEhISEhISEhISEq4jvNWpIaQwL0JCQkJCQkJCQkJCQkJCQkJCQsLtCruv1C2kMP7Om5DwecJq0nV89r5a6jgTXpfGz6OwnY72VbbwD/8YhyqWxly6AAAAAElFTkSuQmCC";
 const houseURL = "https://image.flaticon.com/icons/svg/63/63813.svg";
 const truckURL = "https://d30y9cdsu7xlg0.cloudfront.net/png/690-200.png";
-const plasticURL = "https://5.imimg.com/data5/TC/RM/MY-10914613/plastic-bottle-500x500.jpg";
-const paperURL = "https://4.imimg.com/data4/UL/HL/MY-18120183/75-gsm-a4-copier-paper-1079606-500x500.jpg";
-const glassURL = "https://images-na.ssl-images-amazon.com/images/I/71w973QAsDS._SL1500_.jpg";
+const plasticURL =
+  "https://5.imimg.com/data5/TC/RM/MY-10914613/plastic-bottle-500x500.jpg";
+const paperURL =
+  "https://4.imimg.com/data4/UL/HL/MY-18120183/75-gsm-a4-copier-paper-1079606-500x500.jpg";
+const glassURL =
+  "https://images-na.ssl-images-amazon.com/images/I/71w973QAsDS._SL1500_.jpg";
 
 const getGameMap = () => map;
 
@@ -23,11 +26,7 @@ const getGarbageMap = gameMap =>
     )
   );
 
-const garbageTypes = [
-  plasticURL,
-  paperURL,
-  glassURL,
-]  
+const garbageTypes = [plasticURL, paperURL, glassURL];
 
 class App extends Component {
   constructor() {
@@ -36,11 +35,11 @@ class App extends Component {
       gameMap: getGameMap(),
       garbageMap: getGarbageMap(getGameMap()),
       agentPosition: [0, 4],
-      garbageShown: false,
+      garbageShown: false
     };
   }
   getGarbageType() {
-    return garbageTypes[Math.floor(Math.random() * 3 + 1)];
+    return garbageTypes[Math.floor(Math.random() * 3)];
   }
   newDay(e) {
     e.preventDefault();
@@ -49,12 +48,15 @@ class App extends Component {
       garbageMap: getGarbageMap(state.gameMap)
     }));
   }
-  displayGarbage() {
-    this.setState((state) => ({
-      ...state,
-      garbageShown: true,
-      garbageTypeShown: this.getGarbageType()
-    }))
+  displayGarbage(parentIndex, index) {
+    if (this.state.garbageMap[parentIndex][index] === true) {
+      this.setState(state => ({
+        ...state,
+        garbageShown: true,
+        garbageTypeShown: this.getGarbageType(),
+        field: [parentIndex, index]
+      }));
+    }
   }
   moveAgent(direction) {
     const newAgentPosition = [
@@ -86,7 +88,7 @@ class App extends Component {
   renderGarbageField(parentIndex, index) {
     return (
       <p
-        onClick={() => this.displayGarbage()}
+        onClick={() => this.displayGarbage(parentIndex, index)}
         className={`garbage-status ${
           this.state.garbageMap[parentIndex][index] ? "garbage-active" : ""
         }`}
@@ -97,25 +99,30 @@ class App extends Component {
   }
   answerGarbage(garbageIndex) {
     if (garbageIndex === garbageTypes.indexOf(this.state.garbageTypeShown)) {
-      this.setState((state) => ({
+      const changedGarbageMap = this.state.garbageMap;
+      changedGarbageMap[this.state.field[0]][this.state.field[1]] = false;
+
+      this.setState(state => ({
         ...state,
         garbageShown: false,
-      }))
+        garbageMap: changedGarbageMap
+      }));
     }
   }
   render() {
     return (
       <div className="App">
         <header className="App-header">Smieciarka</header>
-        { this.state.garbageShown ? (
+        {this.state.garbageShown ? (
           <div>
-          <img className="garbage-image" src={this.state.garbageTypeShown}></img>
-          <button onClick={() => this.answerGarbage(0)}>Plastic</button>
-          <button onClick={() => this.answerGarbage(1)}>Paper</button>
-          <button onClick={() => this.answerGarbage(2)}>Glass</button>
-        </div> )
-        : ""
-        }
+            <img className="garbage-image" src={this.state.garbageTypeShown} />
+            <button onClick={() => this.answerGarbage(0)}>Plastic</button>
+            <button onClick={() => this.answerGarbage(1)}>Paper</button>
+            <button onClick={() => this.answerGarbage(2)}>Glass</button>
+          </div>
+        ) : (
+          ""
+        )}
         <button onClick={e => this.newDay(e)}>Nowy dzien</button>
         {this.state.gameMap.map((elements, parentIndex) => (
           <div className="row">
@@ -126,7 +133,7 @@ class App extends Component {
                 ) : (
                   <React.Fragment>
                     <img src={houseURL} />
-                    { this.renderGarbageField(parentIndex, index) }
+                    {this.renderGarbageField(parentIndex, index)}
                   </React.Fragment>
                 )}
                 {this.state.agentPosition[0] === parentIndex &&
