@@ -30,22 +30,34 @@ const garbageTypes = [plasticURL, paperURL, glassURL];
 
 class App extends Component {
   constructor() {
+    const garbageMap = getGarbageMap(getGameMap());
     super();
     this.state = {
       gameMap: getGameMap(),
-      garbageMap: getGarbageMap(getGameMap()),
+      garbageMap,
       agentPosition: [0, 4],
-      garbageShown: false
+      garbageShown: false,
+      garbageLeft: this.countLeftGarbage(garbageMap)
     };
+  }
+  countLeftGarbage(garbageMap) {
+    return garbageMap.reduce(
+      (acc, el) => acc + el.reduce((acc, el) => (el ? acc + 1 : acc), 0),
+      0
+    );
   }
   getGarbageType() {
     return garbageTypes[Math.floor(Math.random() * 3)];
   }
   newDay(e) {
     e.preventDefault();
+    const newGarbageMap = getGarbageMap(this.state.gameMap);
+
     this.setState(state => ({
       ...state,
-      garbageMap: getGarbageMap(state.gameMap)
+      garbageMap: newGarbageMap,
+      agentPosition: [0, 4],
+      garbageLeft: this.countLeftGarbage(newGarbageMap),
     }));
   }
   displayGarbage(parentIndex, index) {
@@ -105,14 +117,15 @@ class App extends Component {
       this.setState(state => ({
         ...state,
         garbageShown: false,
-        garbageMap: changedGarbageMap
+        garbageMap: changedGarbageMap,
+        garbageLeft: this.countLeftGarbage(changedGarbageMap),
       }));
     }
   }
   render() {
     return (
       <div className="App">
-        <header className="App-header">Smieciarka</header>
+        <header className="App-header">Smieciarka - zostalo { this.state.garbageLeft }</header>        
         {this.state.garbageShown ? (
           <div>
             <img className="garbage-image" src={this.state.garbageTypeShown} />
