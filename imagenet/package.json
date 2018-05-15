@@ -1,0 +1,12 @@
+{
+  "name": "imagenet",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "flush": "rm -rf static/img",
+    "server": "python server.py"
+  },
+  "author": "",
+  "license": "ISC"
+}
