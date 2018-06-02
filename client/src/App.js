@@ -1,44 +1,35 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import map from "./map";
 
-const roadURL =
-  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAUVBMVEX///8AAADMzMzk5OTx8fHt7e27u7v5+fkZGRnR0dEoKCiioqIpKSnBwcGrq6uysrKampo0NDRTU1ONjY0ICAiHh4d+fn4hISFCQkKAgICYmJg26SuaAAABcUlEQVR4nO3czW6CQBSAUcS2Wn5qFS3S93/QbiQDi4ZMQky8nG85uZnM2d7FFEVm77tZ5eN4v1vsc3JLuTh9PDxGP+bnb7kPzo6QkPCVhUOd+gkpzIuQkJCQkJCQkJCQkJCQkJCQkJBwu8K6Tf2GFMbfeRMSEhISEhISEhISEhISEhISEhKuI8yLkJCQkJCQkJCQkJCQkJCQkJCQcLvC+yV1DymMvxEmJCQkJCQkJCQkJCQkJCQkJCQkXEc4fKf87klISEhISEhISEhISEhISEhISEi4ZWF3SnUhhfF33oSEhISEhISEhISEhISEhISEhM8RlsVhrGhDCvsm1YcU5kVISEhISEhISEhISEhISEhISEj4X8051YQUxt95ExISEhISEhISEhISEhISEhISEq4jvNWpIaQwL0JCQkJCQkJCQkJCQkJCQkJCQsLtCruv1C2kMP7Om5DwecJq0nV89r5a6jgTXpfGz6OwnY72VbbwD/8YhyqWxly6AAAAAElFTkSuQmCC";
-const houseURL = "https://image.flaticon.com/icons/svg/63/63813.svg";
-const truckURL = "https://d30y9cdsu7xlg0.cloudfront.net/png/690-200.png";
-const plasticURL =
-  "https://5.imimg.com/data5/TC/RM/MY-10914613/plastic-bottle-500x500.jpg";
-const paperURL =
-  "https://4.imimg.com/data4/UL/HL/MY-18120183/75-gsm-a4-copier-paper-1079606-500x500.jpg";
-const glassURL =
-  "https://images-na.ssl-images-amazon.com/images/I/71w973QAsDS._SL1500_.jpg";
+import imageSources from "./utils/imageSources";
+import validators from "./utils/validators";
+import generators from "./utils/generators";
 
-const getGameMap = () => map;
-
-const getRandomGarbage = () =>
-  Math.floor(Math.random() * 3 + 1) === 1 ? true : false;
-
-const getGarbageMap = gameMap =>
-  gameMap.map(gameRow =>
-    gameRow.map(
-      element => (element.FieldType === "house" ? getRandomGarbage() : false)
-    )
-  );
-
-const garbageTypes = [plasticURL, paperURL, glassURL];
+const garbageTypes = [
+  imageSources.plasticURL,
+  imageSources.paperURL,
+  imageSources.glassURL
+];
 
 class App extends Component {
   constructor() {
-    const garbageMap = getGarbageMap(getGameMap());
     super();
+
+    const gameMap = generators.fileMapGenerator();
+    const garbageMap = generators.getGarbageMap(gameMap);
+
     this.state = {
-      gameMap: getGameMap(),
+      gameMap: gameMap,
       garbageMap,
       agentPosition: [0, 4],
       garbageShown: false,
-      garbageLeft: this.countLeftGarbage(garbageMap)
+      garbageLeft: this.countLeftGarbage(garbageMap),
+      goodAnswers: 0,
+      badAnswers: 0,
     };
+
+    window.state = this.state;
   }
   countLeftGarbage(garbageMap) {
     return garbageMap.reduce(
@@ -51,14 +42,19 @@ class App extends Component {
   }
   newDay(e) {
     e.preventDefault();
-    const newGarbageMap = getGarbageMap(this.state.gameMap);
+    const newGarbageMap = generators.getGarbageMap(this.state.gameMap);
 
     this.setState(state => ({
       ...state,
       garbageMap: newGarbageMap,
       agentPosition: [0, 4],
-      garbageLeft: this.countLeftGarbage(newGarbageMap),
+      garbageLeft: this.countLeftGarbage(newGarbageMap)
     }));
+
+    window.state = {
+      garbageMap: newGarbageMap,
+      garbageLeft: this.countLeftGarbage(newGarbageMap)
+    }
   }
   displayGarbage(parentIndex, index) {
     if (this.state.garbageMap[parentIndex][index] === true) {
@@ -77,25 +73,26 @@ class App extends Component {
     ];
 
     if (
-      newAgentPosition[0] > 9 ||
-      newAgentPosition[0] < 0 ||
-      newAgentPosition[1] < 0 ||
-      newAgentPosition[1] > 9
-    ) {
+      !validators.getOutOfBoundsValidator(newAgentPosition) ||
+      (!validators.fieldTypeValidator(
+        newAgentPosition,
+        this.state.gameMap,
+        "path"
+      ) &&
+        !validators.fieldTypeValidator(
+          newAgentPosition,
+          this.state.gameMap,
+          "highway"
+        ))
+    )
       return;
-    }
-
-    if (
-      this.state.gameMap[newAgentPosition[0]][newAgentPosition[1]].FieldType ===
-      "house"
-    ) {
-      return;
-    }
 
     this.setState(state => ({
       ...state,
       agentPosition: newAgentPosition
     }));
+
+    window.state.agentPosition = newAgentPosition;
   }
   renderGarbageField(parentIndex, index) {
     return (
@@ -119,50 +116,80 @@ class App extends Component {
         garbageShown: false,
         garbageMap: changedGarbageMap,
         garbageLeft: this.countLeftGarbage(changedGarbageMap),
+        goodAnswers: state.goodAnswers + 1,
       }));
+
+      window.state.garbageMap = changedGarbageMap,
+      window.state.garbageLeft = this.countLeftGarbage(changedGarbageMap)
+      } else {
+      this.setState(state => ({
+        ...state,
+        badAnswers: state.badAnswers + 1
+      }))
     }
   }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">Smieciarka - zostalo { this.state.garbageLeft }</header>        
-        {this.state.garbageShown ? (
-          <div>
-            <img className="garbage-image" src={this.state.garbageTypeShown} />
-            <button onClick={() => this.answerGarbage(0)}>Plastic</button>
-            <button onClick={() => this.answerGarbage(1)}>Paper</button>
-            <button onClick={() => this.answerGarbage(2)}>Glass</button>
-          </div>
-        ) : (
-          ""
-        )}
-        <button onClick={e => this.newDay(e)}>Nowy dzien</button>
-        {this.state.gameMap.map((elements, parentIndex) => (
-          <div className="row">
-            {elements.map((element, index) => (
-              <div className="cell">
-                {element.FieldType === "path" ? (
-                  <img src={roadURL} />
-                ) : (
-                  <React.Fragment>
-                    <img src={houseURL} />
-                    {this.renderGarbageField(parentIndex, index)}
-                  </React.Fragment>
-                )}
-                {this.state.agentPosition[0] === parentIndex &&
-                this.state.agentPosition[1] === index ? (
-                  <img className="truck-image" src={truckURL} />
-                ) : (
-                  ""
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
-        <button onClick={() => this.moveAgent([-1, 0])}>Up</button>
-        <button onClick={() => this.moveAgent([1, 0])}>Down</button>
-        <button onClick={() => this.moveAgent([0, -1])}>Left</button>
-        <button onClick={() => this.moveAgent([0, 1])}>Right</button>
+      <div>
+        <div className="Sidebar" >
+          <h2>Game dashboard</h2>
+          <p>Garbage left: <span>{ this.state.garbageLeft }</span></p>
+          <p data-testid="image-src">{ this.state.garbageTypeShown }</p>
+          <p>Good answers: { this.state.goodAnswers}</p>
+          <p>Bad answers: { this.state.badAnswers}</p>
+        </div>
+        <div className="App">
+          <header className="App-header">
+            Smieciarka - zostalo {this.state.garbageLeft}
+          </header>
+          {this.state.garbageShown ? (
+            <div>
+              <img
+                className="garbage-image"
+                src={this.state.garbageTypeShown}
+              />
+              <button data-testid='plastic' onClick={() => this.answerGarbage(0)}>Plastic</button>
+              <button data-testid='paper' onClick={() => this.answerGarbage(1)}>Paper</button>
+              <button data-testid='glass' onClick={() => this.answerGarbage(2)}>Glass</button>
+            </div>
+          ) : (
+            ""
+          )}
+          <button onClick={e => this.newDay(e)}>Nowy dzien</button>
+          {this.state.gameMap.map((elements, parentIndex) => (
+            <div className="row">
+              {elements.map((element, index) => (
+                <div className="cell">
+                  {element.FieldType === "path" ||
+                  element.FieldType === "highway" ? (
+                    <img
+                      src={
+                        element.FieldType === "path"
+                          ? imageSources.roadURL
+                          : imageSources.highwayURL
+                      }
+                    />
+                  ) : (
+                    <React.Fragment>
+                      <img src={imageSources.houseURL} />
+                      {this.renderGarbageField(parentIndex, index)}
+                    </React.Fragment>
+                  )}
+                  {this.state.agentPosition[0] === parentIndex &&
+                  this.state.agentPosition[1] === index ? (
+                    <img className="truck-image" src={imageSources.truckURL} />
+                  ) : (
+                    ""
+                  )}
+                </div>
+              ))}
+            </div>
+          ))}
+          <button data-testid='go-up' onClick={() => this.moveAgent([-1, 0])}>Up</button>
+          <button data-testid='go-down' onClick={() => this.moveAgent([1, 0])}>Down</button>
+          <button data-testid='go-left' onClick={() => this.moveAgent([0, -1])}>Left</button>
+          <button data-testid='go-right' onClick={() => this.moveAgent([0, 1])}>Right</button>
+        </div>
       </div>
     );
   }

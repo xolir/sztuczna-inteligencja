@@ -1,0 +1,17 @@
+{
+  "name": "agent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "node --inspect-brk agent.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "form-data": "^2.3.2",
+    "puppeteer": "^1.4.0"
+  }
+}
