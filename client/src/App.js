@@ -38,7 +38,9 @@ class App extends Component {
     );
   }
   getGarbageType() {
-    return garbageTypes[Math.floor(Math.random() * 3)];
+    const chosenGarbageType = garbageTypes[Math.floor(Math.random() * 3)];
+    const chosenGarbageTypeLength = chosenGarbageType.length;
+    return chosenGarbageType[Math.floor(Math.random() * chosenGarbageTypeLength)]
   }
   newDay(e) {
     e.preventDefault();
@@ -107,7 +109,7 @@ class App extends Component {
     );
   }
   answerGarbage(garbageIndex) {
-    if (garbageIndex === garbageTypes.indexOf(this.state.garbageTypeShown)) {
+    if (garbageIndex === garbageTypes.indexOf(garbageTypes.find(el => el.includes(this.state.garbageTypeShown)))) {
       const changedGarbageMap = this.state.garbageMap;
       changedGarbageMap[this.state.field[0]][this.state.field[1]] = false;
 
@@ -134,7 +136,6 @@ class App extends Component {
         <div className="Sidebar" >
           <h2>Game dashboard</h2>
           <p>Garbage left: <span>{ this.state.garbageLeft }</span></p>
-          <p data-testid="image-src">{ this.state.garbageTypeShown }</p>
           <p>Good answers: { this.state.goodAnswers}</p>
           <p>Bad answers: { this.state.badAnswers}</p>
         </div>

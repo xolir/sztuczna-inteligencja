@@ -68,6 +68,15 @@ def upload():
 
         return find_el_in_log()
 
+@app.route('/upload-file', methods=['GET', 'POST'])
+def uploadFile():
+    if request.method == 'POST' and 'photo' in request.files:
+        print("FILENAME ******** /n/n/n", request.files['photo'])
+        currentfilename = photos.save(request.files['photo'])
+        print('here')
+        os.system("python classify_image.py --image_file >> logger.txt {}".format(app.config['UPLOADED_PHOTOS_DEST'] + "/" + currentfilename))
+
+        return find_el_in_log()
 
 if __name__ == '__main__':
     app.run(debug=True)

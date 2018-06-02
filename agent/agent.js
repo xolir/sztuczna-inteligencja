@@ -20,7 +20,7 @@ const getApiResponse = async (photoData) => {
 }
 
 const getPhotoDescriptor = async (page) => {
-    const photoURL = await page.$eval('[data-testid="image-src"]', el => el.textContent);
+    const photoURL = await page.$eval('.garbage-image', el => el.src);
     
     const classifierResponse = await Axios.post('http://localhost:5000/upload', {
         photo: photoURL
@@ -34,7 +34,7 @@ const getPhotoDescriptor = async (page) => {
 };
 puppeteer.launch({
     headless: false,
-    slowMo: 20,
+    slowMo: 200,
 }).then(async browser => {
   const elements = {};
   const page = await browser.newPage();
@@ -61,5 +61,6 @@ puppeteer.launch({
   elements.paper = await page.$('[data-testid="paper"]')
   elements.glass = await page.$('[data-testid="glass"]')
 
+  console.log('clicking on', photoDescriptor);
   elements[photoDescriptor].click();
 });
