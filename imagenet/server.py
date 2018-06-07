@@ -21,7 +21,10 @@ fileTypes = {
     "plastic": [
         'water bottle',
         'bottle',
-        'water jug'
+        'water jug',
+        'plastic bag',
+        'pill bottle',
+        'reel',
     ],
     "glass": [
         'goblet',
@@ -48,6 +51,7 @@ def find_el_in_log():
 
     for filetype in fileTypes:
         for element in fileTypes[filetype]:
+            print('Found element to be', suggestion, suggestion2, suggestion3, '\n')
             if element in suggestion or element in suggestion2 or element in suggestion3:
                 found_element = filetype
                 cleanup()
@@ -62,8 +66,6 @@ def upload():
     if request.method == 'POST':
         photoURL = request.get_json()['photo']
         currentfilename = urllib.urlretrieve(photoURL, 'static/static.jpg')[0]
-        # currentfilename = photos.save(request.files['photo'])
-        print('\n here: ', currentfilename, ' \n \n ')
         os.system("python classify_image.py --image_file >> logger.txt {}".format(currentfilename))
 
         return find_el_in_log()

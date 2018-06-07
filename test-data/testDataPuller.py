@@ -5,14 +5,17 @@ response = google_images_download.googleimagesdownload()
 dataTypes = {
     'plastic': [
         'plastic bottle',
-        'plastic bag'
+        'plastic bag',
+        'plastic can',
+        'metal can',
     ],
     'paper': [
-        'paper',
         'pizza box'
     ],
     'glass': [
-        'glass'
+        'glass',
+        'beer bottle',
+        'wine bottle',
     ]
 }
 
@@ -26,7 +29,7 @@ for garbageType in dataTypes:
     for subType in dataTypes[garbageType]:
         images[garbageType].append(response.download({
             'keywords': subType,
-            'limit': 5,
+            'limit': 25,
             'format': 'jpg'
         }))
 

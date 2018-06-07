@@ -1,5 +1,29 @@
 {
   "dependencies": {
     "axios": "^0.18.0"
-  }
+  },
+  "name": "INT",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "run-imagenet": "cd imagenet/ && npm run server",
+    "run-client": "cd client/ && npm start",
+    "run-testdata": "cd test-data/ && npm run server",
+    "run-agent": "cd agent/ && npm run start",
+    "run": "npm run run-imagenet & npm run run-client & npm run run-testdata",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xolir/sztuczna-inteligencja.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xolir/sztuczna-inteligencja/issues"
+  },
+  "homepage": "https://github.com/xolir/sztuczna-inteligencja#readme"
 }

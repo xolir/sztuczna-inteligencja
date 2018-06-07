@@ -48,19 +48,25 @@ puppeteer.launch({
 
   const gameStateRef = await page.evaluate(() => window.state);
 
-  await elements.goLeft.click();
-  await elements.goLeft.click();
-  await elements.goDown.click();
-  await elements.goDown.click();
-  await elements.goDown.click();
-  await elements.fieldGarbage.click();
+//   await elements.goLeft.click();
+//   await elements.goLeft.click();
+//   await elements.goDown.click();
+//   await elements.goDown.click();
+//   await elements.goDown.click();
+await elements.fieldGarbage.click();
 
-  const photoDescriptor = await getPhotoDescriptor(page);
+  let photoDescriptor = await getPhotoDescriptor(page);
 
   elements.plastic = await page.$('[data-testid="plastic"]')
   elements.paper = await page.$('[data-testid="paper"]')
   elements.glass = await page.$('[data-testid="glass"]')
 
-  console.log('clicking on', photoDescriptor);
+  console.log('Debug info: Clicking on - ', photoDescriptor);
   elements[photoDescriptor].click();
+
+  elements.fieldGarbage = await page.$('.garbage-active');
+  await elements.fieldGarbage.click();
+  photoDescriptor = await getPhotoDescriptor(page);
+  elements[photoDescriptor].click();
+  
 });
