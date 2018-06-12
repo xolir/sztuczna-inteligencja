@@ -59,6 +59,7 @@ class NodeLookup(object):
                label_lookup_path=None,
                uid_lookup_path=None):
     if not label_lookup_path:
+      # TODO CHANGE THIS TO GENERATED LABELSw
       label_lookup_path = os.path.join(
           FLAGS.model_dir, 'imagenet_2012_challenge_label_map_proto.pbtxt')
     if not uid_lookup_path:
@@ -120,6 +121,7 @@ class NodeLookup(object):
 def create_graph():
   """Creates a graph from saved GraphDef file and returns a saver."""
   # Creates graph from saved graph_def.pb.
+  # TODO CHANGE THIS TO LOCAL PATH TRAINED FROM RETRAIN
   with tf.gfile.FastGFile(os.path.join(
       FLAGS.model_dir, 'classify_image_graph_def.pb'), 'rb') as f:
     graph_def = tf.GraphDef()

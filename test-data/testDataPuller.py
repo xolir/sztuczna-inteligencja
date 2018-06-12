@@ -29,7 +29,7 @@ for garbageType in dataTypes:
     for subType in dataTypes[garbageType]:
         images[garbageType].append(response.download({
             'keywords': subType,
-            'limit': 25,
+            'limit': 100,
             'format': 'jpg'
         }))
 
