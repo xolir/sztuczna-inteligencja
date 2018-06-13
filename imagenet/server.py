@@ -26,17 +26,20 @@ fileTypes = {
         'pill bottle',
         'reel',
         'barrel',
+        'metal can'
     ],
     "glass": [
         'goblet',
         'beer glass',
+        'wine bottle',
         'beer bottle',
-        'cocktail shaker',
+        'cocktail shaker'
     ],
     "paper": [
         "envelope",
         "paper towel",
         "carton",
+        "pizza box"
     ]
 }
 
