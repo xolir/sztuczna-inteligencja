@@ -15,7 +15,10 @@
 W rozwiązaniu wykorzystany jest model oparty na konwulsyjnej sieci neuronowej - Inception V3.
 Jest on pretrenowany do detekcji treści znajdujących się na przesłanych obrazach.
 
-Schemat pojedynczej warstwy w Inception: 
+Architektura modelu Inception: 
+![Inception architecture](https://hackathonprojects.files.wordpress.com/2016/09/v3.png)
+
+Schemat pojedynczej warstwy: 
 ![Inception layers](https://cdn-images-1.medium.com/max/1440/1*acUVChT9lBW4vKaAKQhOOw.png)
 
 Konwulsyjna sieć neuronowa oparta jest na wielu neuronom złożonych w warstwy. Pojedynczy neuron to konkretny zestaw informacji które chcemy pobrać z obrazka i zareagować. Jeżeli wszystkie z nich zostaną spełnione aktywowany zostaje dany neuron. 
