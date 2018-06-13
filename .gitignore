@@ -2,4 +2,4 @@
 node_modules
 
 test-data/downloads
-imagenet/static/
+imagenet/static

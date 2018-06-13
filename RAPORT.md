@@ -15,8 +15,6 @@
 W rozwiązaniu wykorzystany jest model oparty na konwulsyjnej sieci neuronowej - Inception V3.
 Jest on pretrenowany do detekcji elementów podanych mu obrazów.
 
-Model ten zbudowany jest z warstw które spłaszczane są do macierzy 1x1
-
 ![Inception layers](https://cdn-images-1.medium.com/max/1440/1*acUVChT9lBW4vKaAKQhOOw.png)
 
 Konwulsyjna sieć neuronowa oparta jest na wielu neuronom złożonych w warstwy. Pojedynczy neuron to konkretny zestaw informacji które chcemy pobrać z obrazka i zareagować. Jeżeli wszystkie z nich zostaną spełnione aktywowany zostaje dany neuron. 

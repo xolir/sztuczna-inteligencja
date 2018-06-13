@@ -53,7 +53,7 @@ puppeteer.launch({
 //   await elements.goDown.click();
 //   await elements.goDown.click();
 //   await elements.goDown.click();
-await elements.fieldGarbage.click();
+    await elements.fieldGarbage.click();
 
   let photoDescriptor = await getPhotoDescriptor(page);
 
@@ -62,11 +62,17 @@ await elements.fieldGarbage.click();
   elements.glass = await page.$('[data-testid="glass"]')
 
   console.log('Debug info: Clicking on - ', photoDescriptor);
-  elements[photoDescriptor].click();
+  await elements[photoDescriptor].click();
 
   elements.fieldGarbage = await page.$('.garbage-active');
+
   await elements.fieldGarbage.click();
+
   photoDescriptor = await getPhotoDescriptor(page);
+
+  elements.plastic = await page.$('[data-testid="plastic"]')
+  elements.paper = await page.$('[data-testid="paper"]')
+  elements.glass = await page.$('[data-testid="glass"]')
   elements[photoDescriptor].click();
   
 });

@@ -29,6 +29,7 @@ fileTypes = {
     "glass": [
         'goblet',
         'beer glass',
+        'beer bottle',
         'cocktail shaker',
     ],
     "paper": [
