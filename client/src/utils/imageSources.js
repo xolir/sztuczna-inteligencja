@@ -5,17 +5,21 @@ export default {
   truckURL: "https://d30y9cdsu7xlg0.cloudfront.net/png/690-200.png",
   plasticURL: [
     "https://5.imimg.com/data5/TC/RM/MY-10914613/plastic-bottle-500x500.jpg",
-    "http://localhost:4000/plasticbottle/bottle1.jpg",
+    "http://localhost:4000/plastic_bag1.jpg",
+    "http://localhost:4000/plastic_can1.jpg",
+    "http://localhost:4000/metal_can1.jpg",
+    "http://localhost:4000/metal_can2.jpg",
     "http://localhost:4000/plasticbottle/bottle2.jpg",
   ],
   paperURL: [
-    "https://4.imimg.com/data4/UL/HL/MY-18120183/75-gsm-a4-copier-paper-1079606-500x500.jpg",
-    "http://localhost:4000/pizzabox/pizza1.jpg",
-    "http://localhost:4000/pizzabox/pizza2.jpg",
+    "http://localhost:4000/pizza_box1.jpg",
+    "http://localhost:4000/pizza_box2.jpg",
   ],
   glassURL: [
-    "http://localhost:4000/glass/glass1.jpg",
-    "https://images-na.ssl-images-amazon.com/images/I/71w973QAsDS._SL1500_.jpg",
+    "http://localhost:4000/glass_1.jpg",
+    "http://localhost:4000/glass_2.jpg",
+    "http://localhost:4000/beer_bottle1.jpg",
+    "http://localhost:4000/beer_bottle2.jpg",
   ],
   highwayURL: "https://upload.wikimedia.org/wikipedia/commons/3/32/Denmark_road_sign_E42.svg",  
 };

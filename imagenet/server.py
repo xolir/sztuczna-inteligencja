@@ -25,6 +25,7 @@ fileTypes = {
         'plastic bag',
         'pill bottle',
         'reel',
+        'barrel',
     ],
     "glass": [
         'goblet',
