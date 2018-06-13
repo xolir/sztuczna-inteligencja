@@ -13,13 +13,14 @@
 
 ### Implementacja:
 W rozwiązaniu wykorzystany jest model oparty na konwulsyjnej sieci neuronowej - Inception V3.
-Jest on pretrenowany do detekcji elementów podanych mu obrazów.
+Jest on pretrenowany do detekcji treści znajdujących się na przesłanych obrazach.
 
+Schemat pojedynczej warstwy w Inception: 
 ![Inception layers](https://cdn-images-1.medium.com/max/1440/1*acUVChT9lBW4vKaAKQhOOw.png)
 
 Konwulsyjna sieć neuronowa oparta jest na wielu neuronom złożonych w warstwy. Pojedynczy neuron to konkretny zestaw informacji które chcemy pobrać z obrazka i zareagować. Jeżeli wszystkie z nich zostaną spełnione aktywowany zostaje dany neuron. 
 
-Model został ponownie wytrenowany na zbiorze uczącym który zawierał po około 100 obrazków dla każdej kategorii.
+Model został ponownie wytrenowany na zbiorze uczącym który zawierał po około 100 zdjęć dla każdej kategorii.
 
 ##### Rozpoznawane kategorie:
 * Papier
