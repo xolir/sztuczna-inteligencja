@@ -31,7 +31,7 @@ Model został ponownie wytrenowany na zbiorze uczącym który zawierał po okoł
 * Szkło
 
 
-##### Quickstart:
+## Quickstart:
 
 Requirements:
 * Python
