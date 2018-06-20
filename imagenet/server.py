@@ -19,27 +19,13 @@ currentfilename = ""
 
 fileTypes = {
     "plastic": [
-        'water bottle',
-        'bottle',
-        'water jug',
-        'plastic bag',
-        'pill bottle',
-        'reel',
-        'barrel',
-        'metal can'
+        'plastic',
     ],
     "glass": [
-        'goblet',
-        'beer glass',
-        'wine bottle',
-        'beer bottle',
-        'cocktail shaker'
+        'glass',
     ],
     "paper": [
-        "envelope",
-        "paper towel",
-        "carton",
-        "pizza box"
+        "paper"
     ]
 }
 
@@ -51,13 +37,11 @@ def find_el_in_log():
     found_element = 'no found elements'
     with open('logger.txt') as f:
         suggestion = f.readline()
-        suggestion2 = f.readline()
-        suggestion3 = f.readline()
 
     for filetype in fileTypes:
         for element in fileTypes[filetype]:
-            print('Found element to be', suggestion, suggestion2, suggestion3, '\n')
-            if element in suggestion or element in suggestion2 or element in suggestion3:
+            print('Found element to be', suggestion, '\n')
+            if element in suggestion:
                 found_element = filetype
                 cleanup()
                 return filetype
@@ -71,7 +55,7 @@ def upload():
     if request.method == 'POST':
         photoURL = request.get_json()['photo']
         currentfilename = urllib.urlretrieve(photoURL, 'static/static.jpg')[0]
-        os.system("python classify_image.py --image_file >> logger.txt {}".format(currentfilename))
+        os.system("python label_image.py --graph=/tmp/output_graph.pb --labels=/tmp/output_labels.txt --input_layer=Placeholder --output_layer=final_result --image {} >> logger.txt".format(currentfilename))
 
         return find_el_in_log()
 
@@ -81,7 +65,8 @@ def uploadFile():
         print("FILENAME ******** /n/n/n", request.files['photo'])
         currentfilename = photos.save(request.files['photo'])
         print('here')
-        os.system("python classify_image.py --image_file >> logger.txt {}".format(app.config['UPLOADED_PHOTOS_DEST'] + "/" + currentfilename))
+        os.system("python label_image.py --graph=/tmp/output_graph.pb --labels=/tmp/output_labels.txt --input_layer=Placeholder --output_layer=final_result --image {} >> logger.txt".format(app.config['UPLOADED_PHOTOS_DEST'] + "/" + currentfilename))
+        
 
         return find_el_in_log()
 

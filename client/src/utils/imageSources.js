@@ -9,7 +9,6 @@ export default {
     "http://localhost:4000/plastic_can1.jpg",
     "http://localhost:4000/metal_can1.jpg",
     "http://localhost:4000/metal_can2.jpg",
-    "http://localhost:4000/plasticbottle/bottle2.jpg",
   ],
   paperURL: [
     "http://localhost:4000/pizza_box1.jpg",
