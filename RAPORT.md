@@ -27,15 +27,8 @@ Model został ponownie wytrenowany na zbiorze uczącym który zawierał po okoł
 
 ##### Rozpoznawane kategorie:
 * Papier
-    * Pudełka po pizzy
 * Plastik
-    * Butelki plastikowe
-    * Worki plastikowe
-    * Puszki
 * Szkło
-    * Butelki szklane po piwie
-    * Butelki szklane po winie
-    * Szklanki
 
 
  
