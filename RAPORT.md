@@ -23,7 +23,7 @@ Schemat pojedynczej warstwy:
 
 Konwulsyjna sieć neuronowa oparta jest na wielu neuronom złożonych w warstwy. Pojedynczy neuron to konkretny zestaw informacji które chcemy pobrać z obrazka i zareagować. Jeżeli wszystkie z nich zostaną spełnione aktywowany zostaje dany neuron. 
 
-Model został ponownie wytrenowany na zbiorze uczącym który zawierał po około 100 zdjęć dla każdej kategorii.
+Model został ponownie wytrenowany na zbiorze uczącym który zawierał po około 300-400 zdjęć dla każdej kategorii.
 
 ##### Rozpoznawane kategorie:
 * Papier
