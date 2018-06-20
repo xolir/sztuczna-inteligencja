@@ -11,6 +11,9 @@
 
 * Serwer zbierający dane testowe/uczące dla modelu. Pobiera zdefiniowaną ilość obrazów w poszczególnych kategoriach według których algorytm ma rozróżniać obrazy. Zdjęcia pobierane są z serwisu Google Images, następnie zasoby które maja znaleźć się w zbiorze testowym wystawiane są na serwerze HTTP. 
 
+### Czesci indywidualne
+Implementacja rozpoznawania obrazow - Mikołaj Kozakiewicz
+
 ### Implementacja:
 W rozwiązaniu wykorzystany jest model oparty na konwulsyjnej sieci neuronowej - Inception V3.
 Jest on pretrenowany do detekcji treści znajdujących się na przesłanych obrazach.
